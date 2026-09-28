@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'web/**'
+      - "web/**"
 
 jobs:
   ftp-deploy:
@@ -21,4 +21,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./web/
-          server-dir: ./html/escape/
+          server-dir: ./escape/

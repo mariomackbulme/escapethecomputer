@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escape the Computer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --ink: #111111;
+      --muted: #5c6470;
+      --faint: #9aa1ab;
+      --line: #d7dbe0;
+      --bg: #ffffff;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    html {
+      height: 100%;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      /* Platzhalter-Hintergrund: dezentes Platinen-Raster */
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle, #e6e9ed 1px, transparent 1.5px);
+      background-size: 28px 28px;
+      background-attachment: fixed;
+    }
+
+    /* ---------- Sektionen ---------- */
+    .section {
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 56px 64px 24px;
+    }
+
+    .section__inner {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 56px;
+      align-items: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    /* Jede zweite Sektion: Grafik links, Text rechts */
+    .section:nth-of-type(even) .section__text { order: 2; }
+
+    .js .section__inner { opacity: 0; transform: translateY(24px); }
+    .js .section.is-visible .section__inner { opacity: 1; transform: none; }
+
+    .section__number {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin: 0 0 14px;
+    }
+
+    .section__title {
+      font-size: clamp(30px, 4.2vw, 48px);
+      line-height: 1.1;
+      font-weight: 700;
+      margin: 0 0 18px;
+      text-wrap: balance;
+    }
+
+    .section__content {
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin: 0 0 14px;
+      max-width: 34em;
+    }
+
+    .section__content:last-child { margin-bottom: 0; }
+
+    /* ---------- Platzhalter für Grafiken / Animationen ---------- */
+    .visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border: 2px dashed var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .visual__tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    .visual__desc {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 28em;
+    }
+
+    /* ---------- Sektion 1: Titel ---------- */
+    .hero .section__inner {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      gap: 32px;
+    }
+
+    .hero__title {
+      font-family: var(--mono);
+      font-size: clamp(40px, 8vw, 96px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .hero .visual { max-width: 560px; aspect-ratio: 16 / 7; }
+
+    .hero__hint {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* ---------- Sektion 2: Nibbles vier Bits ---------- */
+    .bits {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .bits span {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* ---------- Sektion 4: Stationen ---------- */
+    .stations {
+      list-style: none;
+      margin: 22px 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      counter-reset: station;
+    }
+
+    .stations li {
+      counter-increment: station;
+      font-size: 14px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--bg);
+      color: var(--muted);
+    }
+
+    .stations li::before {
+      content: counter(station) " ";
+      font-family: var(--mono);
+      color: var(--faint);
+    }
+
+    .stations li.is-first {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    /* ---------- Sektion 5: Beispiel-Frage ---------- */
+    .quiz {
+      width: 100%;
+      border: 2px dashed var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 28px;
+    }
+
+    .quiz__q {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 8px 0 18px;
+    }
+
+    .quiz__options {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .quiz__options li {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 16px;
+      background: var(--bg);
+      font-size: 16px;
+    }
+
+    .quiz__options li.is-right { border-color: var(--ink); font-weight: 600; }
+
+    .quiz__options li span {
+      font-family: var(--mono);
+      color: var(--faint);
+      margin-right: 10px;
+    }
+
+    .swatch {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-right: 10px;
+      vertical-align: -2px;
+      border: 1px solid rgba(17, 17, 17, 0.15);
+    }
+
+    .quiz__mini {
+      margin-top: 18px;
+      border-top: 1px dashed var(--line);
+      padding-top: 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ---------- Sektion 6: 0 gegen 1 ---------- */
+    .versus {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .versus b {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--ink);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    /* ---------- Sektion 8: Ausdruck ---------- */
+    .paper {
+      width: 100%;
+      max-width: 380px;
+      justify-self: center;
+      aspect-ratio: 1 / 1.414; /* A4 */
+      background: var(--bg);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 32px rgba(17, 17, 17, 0.08);
+      padding: 28px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .paper__nibble {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto;
+      border: 2px dashed var(--line);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--faint);
+    }
+
+    .paper__headline {
+      text-align: center;
+      font-weight: 700;
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .paper__battery {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .paper__battery i {
+      width: 18px;
+      height: 10px;
+      border: 1.5px solid var(--ink);
+      border-radius: 2px;
+    }
+
+    .paper__battery i.on { background: var(--ink); }
+
+    .paper__label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin: 6px 0 0;
+    }
+
+    .paper__lines { display: grid; gap: 8px; }
+
+    .paper__lines div {
+      height: 8px;
+      border-radius: 4px;
+      background: #eef0f3;
+    }
+
+    .paper__lines div:nth-child(3n) { width: 70%; }
+    .paper__lines div:nth-child(3n+2) { width: 88%; }
+
+    /* ---------- Navigation (Punkte rechts) ---------- */
+    .dots {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 10;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .dots a {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid var(--ink);
+      background: var(--bg);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .dots a:hover { transform: scale(1.3); }
+    .dots a.is-active { background: var(--ink); }
+    .dots a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .section__inner { transition: none; }
+    }
+
+    @media (max-width: 800px) {
+      .section { padding: 56px 40px 56px 20px; }
+      .section__inner { grid-template-columns: 1fr; gap: 28px; }
+      .section:nth-of-type(even) .section__text { order: 0; }
+      .section__content { font-size: 16px; }
+      .dots { right: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav aria-label="Sektionen">
+    <ul class="dots">
+      <li><a href="#titel" aria-label="Titel"></a></li>
+      <li><a href="#nibble" aria-label="Nibble"></a></li>
+      <li><a href="#spielwelt" aria-label="Die Spielwelt"></a></li>
+      <li><a href="#reise" aria-label="Die Reise"></a></li>
+      <li><a href="#aufgabe" aria-label="Minispiel und Frage"></a></li>
+      <li><a href="#bits" aria-label="Die Bits"></a></li>
+      <li><a href="#flucht" aria-label="Die Flucht"></a></li>
+      <li><a href="#ausdruck" aria-label="Der Ausdruck"></a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ========== SEKTION 1: TITEL ========== -->
+    <section class="section hero" id="titel">
+      <div class="section__inner">
+        <h1 class="hero__title">Escape the Computer</h1>
+        <div class="visual">
+          <span class="visual__tag">Grafik · Titel</span>
+          <span class="visual__desc">Titelgrafik / Logo mit Schriftzug „Escape the Computer“</span>
+        </div>
+        <span class="hero__hint">↓ Scrollen</span>
+      </div>
+    </section>
+
+    <!-- ========== SEKTION 2: NIBBLE ========== -->
+    <section class="section" id="nibble">
+      <div class="section__inner">
+        <div class="section__text">
+          <p class="section__number">02 · Die Hauptfigur</p>
+          <h2 class="section__title">Das ist Nibble.</h2>
+          <p class="section__content">Nibble ist klein, aber mutig. Sein Name kommt aus der Informatik: Ein Nibble ist ein halbes Byte, also genau 4 Bit.</p>
+          <p class="section__content">Und genau daraus besteht er. Seine vier Bits sind gleichzeitig seine vier Leben.</p>
+          <div class="bits" aria-label="Nibbles vier Bits">
+            <span>1</span><span>0</span><span>1</span><span>1</span>
+          </div>
+        </div>
+        <div class="visual">
+          <span class="visual__tag">Grafik · Nibble</span>
+          <span class="visual__desc">Nibble vorgestellt: Figur im Comic-Stil, die vier Bits gut sichtbar</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEKTION 3: SPIELWELT ========== -->
+    <section class="section" id="spielwelt">
+      <div class="section__inner">
+        <div class="section__text">
+          <p class="section__number">03 · Die Spielwelt</p>
+          <h2 class="section__title">Plötzlich ist Nibble mittendrin.</h2>
+          <p class="section__content">Nibble fällt mitten auf ein Motherboard. Überall Leiterbahnen, Chips und Anschlüsse. Doch alles ist still, blass und leblos: kein Ton, kaum Farbe.</p>
+          <p class="section__content">Nibble will nur eines: hier raus.</p>
+        </div>
+        <div class="visual">
+          <span class="visual__tag">Animation · Board</span>
+          <span class="visual__desc">Motherboard von oben, gedämpfte Farben. Nibble fällt von oben auf das Board.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEKTION 4: DIE REISE ========== -->
+    <section class="section" id="reise">
+      <div class="section__inner">
+        <div class="section__text">
+          <p class="section__number">04 · Die Reise</p>
+          <h2 class="section__title">Sechs Stationen bis zur Freiheit.</h2>
+          <p class="section__content">Um zu entkommen, muss Nibble die Bauteile des Computers wecken, eines nach dem anderen. Jede Station stellt ihm eine Aufgabe.</p>
+          <p class="section__content">Die erste wartet schon: der Kopfhörer-Anschluss.</p>
+          <ol class="stations">
+            <li class="is-first">Kopfhörer</li>
+            <li>CPU</li>
+            <li>RAM 1</li>
+            <li>Grafikkarte</li>
+            <li>RAM 2</li>
+            <li>USB</li>
+          </ol>
+        </div>
+        <div class="visual">
+          <span class="visual__tag">Animation · Board</span>
+          <span class="visual__desc">Board mit markierten Stationen. Nibble läuft zum Audiostecker.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEKTION 5: MINISPIEL & FRAGE ========== -->
+    <section class="section" id="aufgabe">
+      <div class="section__inner">
+        <div class="section__text">
+          <p class="section__number">05 · Die Aufgabe</p>
+          <h2 class="section__title">Ein Minispiel. Eine Frage.</h2>
+          <p class="section__content">An jeder Station muss Nibble ein kleines Minispiel schaffen und eine Frage zur Hardware beantworten. Erst dann erwacht das Bauteil.</p>
+          <p class="section__content">Mit jeder gelösten Station wird der Computer lebendiger: Erst kommt der Ton zurück, später leuchten die Farben.</p>
+        </div>
+        <div class="quiz">
+          <span class="visual__tag">Beispiel · Frage am Kopfhörer-Anschluss</span>
+          <p class="quiz__q">Welche Farbe hat der Anschluss für Kopfhörer?</p>
+          <ol class="quiz__options">
+            <li><span>A</span><i class="swatch" style="background:#f4a6c6"></i>Rosa</li>
+            <li class="is-right"><span>B</span><i class="swatch" style="background:#8dc63f"></i>Grün</li>
+            <li><span>C</span><i class="swatch" style="background:#111111"></i>Schwarz</li>
+          </ol>
+          <p class="quiz__mini">Platzhalter Minispiel: Screenshot oder kurze Animation des Minispiels</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEKTION 6: DIE BITS ========== -->
+    <section class="section" id="bits">
+      <div class="section__inner">
+        <div class="section__text">
+          <p class="section__number">06 · Die Gefahr</p>
+          <h2 class="section__title">Die CPU erwacht, und mit ihr die Bits.</h2>
+          <p class="section__content">Ab jetzt schickt die CPU Nullen und Einsen über die Leiterbahnen. Trifft eines davon Nibble, verliert er ein Bit.</p>
+          <p class="section__content">Doch Nibble wehrt sich: Er wirft das Gegenstück und löscht das Bit aus, bevor es ihn erwischt.</p>
+          <div class="versus">
+            <b>0</b> löscht <b>1</b> <span aria-hidden="true">·</span> <b>1</b> löscht <b>0</b>
+          </div>
+        </div>
+        <div class="visual">
+          <span class="visual__tag">Animation · Board</span>
+          <span class="visual__desc">Board mit 0en und 1en, die entlang der Leiterbahnen auf Nibble zufliegen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEKTION 7: DIE FLUCHT ========== -->
+    <section class="section" id="flucht">
+      <div class="section__inner">
+        <div class="section__text">
+          <p class="section__number">07 · Die Flucht</p>
+          <h2 class="section__title">Der Weg nach draußen.</h2>
+          <p class="section__content">Alle Stationen sind wach, der Computer leuchtet und klingt. Jetzt fehlt nur noch der Ausgang.</p>
+          <p class="section__content">Ein USB-Kabel wird eingesteckt, und Nibble nutzt seine Chance.</p>
+        </div>
+        <div class="visual">
+          <span class="visual__tag">Animation · Board</span>
+          <span class="visual__desc">Voll erleuchtetes Board. Ein USB-Stick fährt von der Seite herein, Nibble springt hinein.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEKTION 8: DER AUSDRUCK ========== -->
+    <section class="section" id="ausdruck">
+      <div class="section__inner">
+        <div class="section__text">
+          <p class="section__number">08 · Geschafft</p>
+          <h2 class="section__title">Nibble druckt sich selbst aus.</h2>
+          <p class="section__content">Am Ende landet Nibble auf Papier, zusammen mit allem, was er unterwegs gelernt hat: alle Fragen und Antworten zum Nachlesen.</p>
+          <p class="section__content">Ist ein Drucker angeschlossen, kommt das Blatt direkt heraus. Sonst bleibt es als PDF.</p>
+        </div>
+        <div class="paper" aria-label="Vorschau des Ausdrucks">
+          <div class="paper__nibble">Nibble</div>
+          <p class="paper__headline">I escaped the computer! Juhu!</p>
+          <div class="paper__battery" aria-label="Verbliebene Batterie: 3 von 4">
+            <i class="on"></i><i class="on"></i><i class="on"></i><i></i>
+          </div>
+          <p class="paper__label">Das habe ich gelernt</p>
+          <div class="paper__lines">
+            <div></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    document.documentElement.classList.add('js');
+
+    const sections = document.querySelectorAll('.section');
+    const dots = document.querySelectorAll('.dots a');
+
+    // Aktive Sektion erkennen: einblenden + Punkt markieren
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          dots.forEach((dot) => {
+            dot.classList.toggle('is-active', dot.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach((section) => observer.observe(section));
+
+    // Präsentationsmodus: Pfeiltasten, Bild auf/ab und Leertaste springen genau eine Sektion
+    document.addEventListener('keydown', (e) => {
+      const next = ['ArrowDown', 'PageDown', ' '].includes(e.key);
+      const prev = ['ArrowUp', 'PageUp'].includes(e.key);
+      if (!next && !prev) return;
+      e.preventDefault();
+      const list = Array.from(sections);
+      let current = list.findIndex((s) => Math.abs(s.getBoundingClientRect().top) < window.innerHeight / 2);
+      if (current < 0) current = 0;
+      const target = list[Math.min(Math.max(current + (next ? 1 : -1), 0), list.length - 1)];
+      target.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

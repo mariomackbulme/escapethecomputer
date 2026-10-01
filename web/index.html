@@ -8,10 +8,18 @@
     *, *::before, *::after { box-sizing: border-box; }
 
     :root {
-      --ink: #111111;
-      --muted: #5c6470;
-      --faint: #9aa1ab;
-      --line: #d7dbe0;
+      /* Projektfarben */
+      --green: #587f53;   /* Hauptfarbe: Platine */
+      --yellow: #f5cf65;  /* Akzent: Goldkontakte */
+      --blue: #536f88;    /* Details (Rahmen) */
+      --text: #2f4254;    /* Textfarbe: dunkles Blau */
+
+      --ink: #24331f;          /* dunkles Grün für Überschriften */
+      --muted: var(--text);    /* Fließtext */
+      --faint: #8ea0b2;        /* helles Blau für kleine Labels */
+      --line: #c9d8c6;         /* helles Grün für Rahmen */
+      --tint-green: #eef4ec;
+      --tint-yellow: #fdf5dc;
       --bg: #ffffff;
       --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -28,9 +36,12 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       /* Platzhalter-Hintergrund: dezentes Platinen-Raster */
       background-color: var(--bg);
-      background-image:
-        radial-gradient(circle, #e6e9ed 1px, transparent 1.5px);
-      background-size: 28px 28px;
+      /* Hintergrund: Leiterbahnen. Zurück zu den Punkten: diese 2 Zeilen löschen
+         und die auskommentierten Punkte-Zeilen darunter wieder aktivieren. */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E %3Cg fill='none' stroke='%23587f53' stroke-opacity='0.2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E %3Cpath d='M0 40H80L110 70H170L200 40H240'/%3E %3Cpath d='M0 170H50L80 200H150L180 170H240'/%3E %3Cpath d='M130 0V36'/%3E%3Cpath d='M130 240V221'/%3E %3Cpath d='M24 100H60L80 120H116'/%3E %3Cpath d='M154 110H200L220 130V146'/%3E %3Crect x='20' y='210' width='40' height='22' rx='2'/%3E %3Cpath d='M28 210v-6M40 210v-6M52 210v-6M28 232v6M40 232v6M52 232v6'/%3E %3C/g%3E %3Cg fill='%23ffffff' stroke='%23587f53' stroke-opacity='0.2' stroke-width='2'%3E %3Ccircle cx='130' cy='40' r='4'/%3E%3Ccircle cx='130' cy='217' r='4'/%3E %3Ccircle cx='20' cy='100' r='4'/%3E%3Ccircle cx='120' cy='120' r='4'/%3E %3Ccircle cx='150' cy='110' r='4'/%3E%3Ccircle cx='220' cy='150' r='4'/%3E %3C/g%3E%3C/svg%3E");
+      background-size: 240px 240px;
+      /* background-image: radial-gradient(circle, rgba(88, 127, 83, 0.5) 1px, transparent 1.5px);
+         background-size: 28px 28px; */
       background-attachment: fixed;
     }
 
@@ -62,12 +73,18 @@
     .js .section.is-visible .section__inner { opacity: 1; transform: none; }
 
     .section__number {
+      display: inline-block;
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: 16px;
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--faint);
-      margin: 0 0 14px;
+      color: var(--green);
+      background: var(--yellow);
+      border: 2px solid var(--green);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin: 0 0 16px;
     }
 
     .section__title {
@@ -75,6 +92,7 @@
       line-height: 1.1;
       font-weight: 700;
       margin: 0 0 18px;
+      color: var(--green);
       text-wrap: balance;
     }
 
@@ -93,7 +111,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 4 / 3;
-      border: 2px dashed var(--line);
+      border: 2px dashed #b9c6d3;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.85);
       display: flex;
@@ -110,7 +128,8 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--faint);
+      color: var(--text);
+      font-weight: 600;
     }
 
     .visual__desc {
@@ -355,7 +374,7 @@
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       z-index: 10;
       list-style: none;
       margin: 0;
@@ -364,8 +383,8 @@
 
     .dots a {
       display: block;
-      width: 10px;
-      height: 10px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       border: 1px solid var(--ink);
       background: var(--bg);
@@ -387,6 +406,122 @@
       .section:nth-of-type(even) .section__text { order: 0; }
       .section__content { font-size: 16px; }
       .dots { right: 12px; }
+    }
+
+    /* ================= FARBEN (Projektpalette) ================= */
+
+    /* Sektion 1: Titel auf weißem Grund, Schrift grün */
+    .hero .hero__title {
+      color: var(--green);
+    }
+    .hero .hero__hint { color: var(--text); }
+
+    /* Sektion 2: Nibbles Bits wie Goldkontakte */
+    .bits span {
+      border-color: var(--green);
+      background: var(--yellow);
+      color: var(--green);
+    }
+
+    /* Sektion 4: Stationen */
+    .stations li { border-color: var(--line); color: var(--faint); }
+
+    /* Alle 6 Stationen in einer Zeile */
+    .stations { flex-wrap: nowrap; gap: 5px; }
+    .stations li {
+      font-size: 12px;
+      padding: 4px 8px;
+      white-space: nowrap;
+    }
+    @media (max-width: 800px) {
+      .stations { flex-wrap: wrap; }
+    }
+    .stations li.is-first {
+      border-color: var(--green);
+      background: var(--yellow);
+      color: var(--green);
+      font-weight: 600;
+    }
+    .stations li.is-first::before { color: var(--green); }
+
+    /* Sektion 5: Quiz */
+    .quiz { border-color: #b9c6d3; }
+    .quiz__options li { border-color: var(--line); }
+    .quiz__options li.is-right {
+      border: 2px solid var(--green);
+      background: var(--tint-green);
+      color: var(--ink);
+    }
+    .quiz__mini { border-top-color: var(--line); }
+
+    /* Sektion 6: 0 gegen 1 */
+    .versus b {
+      border-color: var(--text);
+      color: var(--text);
+    }
+    .versus b:nth-of-type(odd) { background: var(--yellow); border-color: var(--green); color: var(--green); }
+
+    /* Sektion 8: Ausdruck */
+    .paper { border-color: var(--line); }
+    .paper__headline { color: var(--green); }
+    .paper__battery i { border-color: var(--green); }
+    .paper__battery i.on { background: var(--green); }
+    .paper__nibble { border-color: var(--yellow); color: var(--text); }
+    .paper__lines div { background: #e6ecf1; }
+
+    /* Navigation: weiße Punkte mit grünem Rand, aktiv in Gold */
+    .dots a {
+      border: 2px solid var(--green);
+      background: #ffffff;
+    }
+    .dots a.is-active {
+      background: var(--yellow);
+      border-color: var(--green);
+    }
+    .dots a:focus-visible { outline-color: var(--green); }
+
+    /* Lesbarkeit: weiße, weich auslaufende Fläche hinter Texten */
+    .section__text,
+    .hero .hero__title,
+    .hero .hero__hint {
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 0 36px 28px rgba(255, 255, 255, 0.94);
+      border-radius: 24px;
+    }
+    .visual,
+    .quiz {
+      background: rgba(255, 255, 255, 0.96) !important;
+    }
+
+    /* Sektion 5: Karteikarte zum Umdrehen */
+    #aufgabe { cursor: pointer; }
+    .flip { width: 100%; perspective: 1400px; }
+    .flip__inner {
+      display: grid;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .flip__face {
+      grid-area: 1 / 1;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .flip__back { transform: rotateY(180deg); }
+    .quiz .visual__tag,
+    .quiz .quiz__q { color: var(--green); }
+    /* Kartengröße richtet sich nach der Frage (wie vorher), Vorderseite passt sich an */
+    .flip .flip__front { aspect-ratio: auto; }
+    .flip.is-flipped .flip__inner { transform: rotateY(180deg); }
+    .flip__hint {
+      margin-top: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flip__inner { transition: none; }
     }
   </style>
 </head>
@@ -487,7 +622,15 @@
           <p class="section__content">An jeder Station muss Nibble ein kleines Minispiel schaffen und eine Frage zur Hardware beantworten. Erst dann erwacht das Bauteil.</p>
           <p class="section__content">Mit jeder gelösten Station wird der Computer lebendiger: Erst kommt der Ton zurück, später leuchten die Farben.</p>
         </div>
-        <div class="quiz">
+        <!-- Karteikarte: Klick irgendwo in Sektion 5 dreht sie um -->
+        <div class="flip" id="quizFlip">
+          <div class="flip__inner">
+            <div class="flip__face flip__front visual">
+              <span class="visual__tag">Minispiel · Kopfhörer-Anschluss</span>
+              <span class="visual__desc">Platzhalter: Hier läuft das Minispiel (Screenshot oder kurze Animation).</span>
+              <span class="flip__hint">Klicken zum Umdrehen</span>
+            </div>
+            <div class="flip__face flip__back quiz">
           <span class="visual__tag">Beispiel · Frage am Kopfhörer-Anschluss</span>
           <p class="quiz__q">Welche Farbe hat der Anschluss für Kopfhörer?</p>
           <ol class="quiz__options">
@@ -495,7 +638,8 @@
             <li class="is-right"><span>B</span><i class="swatch" style="background:#8dc63f"></i>Grün</li>
             <li><span>C</span><i class="swatch" style="background:#111111"></i>Schwarz</li>
           </ol>
-          <p class="quiz__mini">Platzhalter Minispiel: Screenshot oder kurze Animation des Minispiels</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -593,6 +737,11 @@
       const target = list[Math.min(Math.max(current + (next ? 1 : -1), 0), list.length - 1)];
       target.scrollIntoView({ behavior: 'smooth' });
     });
+    // Sektion 5: Klick dreht die Karteikarte um (erneuter Klick dreht zurück)
+    const aufgabe = document.getElementById('aufgabe');
+    const quizFlip = document.getElementById('quizFlip');
+    aufgabe.addEventListener('click', () => quizFlip.classList.toggle('is-flipped'));
+
   </script>
 </body>
 </html>

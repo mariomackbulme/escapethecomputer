@@ -147,13 +147,25 @@
       gap: 32px;
     }
 
+    /* Pixel-Schrift für den Titel (liegt lokal in fonts/) */
+    @font-face {
+      font-family: "Press Start 2P";
+      src: url("fonts/press-start-2p.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
     .hero__title {
-      font-family: var(--mono);
-      font-size: clamp(40px, 8vw, 96px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1;
+      font-family: "Press Start 2P", var(--mono);
+      font-size: clamp(22px, 7.5vw, 112px);
+      white-space: nowrap;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.35;
+      text-align: center;
       margin: 0;
+      padding: 0.2em 0.3em;
     }
 
     .hero .visual { max-width: 560px; aspect-ratio: 16 / 7; }
@@ -545,11 +557,7 @@
     <!-- ========== SEKTION 1: TITEL ========== -->
     <section class="section hero" id="titel">
       <div class="section__inner">
-        <h1 class="hero__title">Escape the Computer</h1>
-        <div class="visual">
-          <span class="visual__tag">Grafik · Titel</span>
-          <span class="visual__desc">Titelgrafik / Logo mit Schriftzug „Escape the Computer“</span>
-        </div>
+        <h1 class="hero__title">Escape the<br>Computer</h1>
         <span class="hero__hint">↓ Scrollen</span>
       </div>
     </section>

@@ -1,0 +1,552 @@
+/* ==========================================================
+   Escape the Computer – Stylesheet
+   Eingebunden in index.html über:
+   <link rel="stylesheet" href="styles.css">
+   ========================================================== */
+
+
+/* ---------- 1. Grundlagen ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  /* Projektfarben */
+  --green: #587f53;        /* Hauptfarbe: Platine */
+  --yellow: #f5cf65;       /* Akzent: Goldkontakte */
+  --text: #111111;         /* Fließtext, Rahmen */
+
+  /* Abstufungen */
+  --ink: #24331f;          /* sehr dunkles Grün (Standard-Schriftfarbe) */
+  --faint: #8ea0b2;        /* helles Blau für kleine Beschriftungen */
+  --line: #c9d8c6;         /* helles Grün für dünne Rahmen */
+  --tint-green: #eef4ec;   /* zartes Grün für Hervorhebungen */
+  --bg: #ffffff;
+
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("fonts/press-start-2p.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  height: 100%;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg);
+  /* Hintergrund: Leiterbahnen-Muster (SVG, 20 % Deckkraft) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E %3Cg fill='none' stroke='%23587f53' stroke-opacity='0.2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E %3Cpath d='M0 40H80L110 70H170L200 40H240'/%3E %3Cpath d='M0 170H50L80 200H150L180 170H240'/%3E %3Cpath d='M130 0V36'/%3E%3Cpath d='M130 240V221'/%3E %3Cpath d='M24 100H60L80 120H116'/%3E %3Cpath d='M154 110H200L220 130V146'/%3E %3Crect x='20' y='210' width='40' height='22' rx='2'/%3E %3Cpath d='M28 210v-6M40 210v-6M52 210v-6M28 232v6M40 232v6M52 232v6'/%3E %3C/g%3E %3Cg fill='%23ffffff' stroke='%23587f53' stroke-opacity='0.2' stroke-width='2'%3E %3Ccircle cx='130' cy='40' r='4'/%3E%3Ccircle cx='130' cy='217' r='4'/%3E %3Ccircle cx='20' cy='100' r='4'/%3E%3Ccircle cx='120' cy='120' r='4'/%3E %3Ccircle cx='150' cy='110' r='4'/%3E%3Ccircle cx='220' cy='150' r='4'/%3E %3C/g%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  background-attachment: fixed;
+}
+
+
+/* ---------- 2. Sektionen (gemeinsames Layout) ---------- */
+
+.section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 56px 64px 24px;
+}
+
+.section__inner {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 56px;
+  align-items: center;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Einblenden beim Scrollen (Klasse .js setzt das Script) */
+.js .section__inner { opacity: 0; transform: translateY(24px); }
+.js .section.is-visible .section__inner { opacity: 1; transform: none; }
+
+/* Jede zweite Sektion: Grafik links, Text rechts */
+.section:nth-of-type(even) .section__text { order: 2; }
+
+/* Weiße, weich auslaufende Fläche hinter Texten (Lesbarkeit vor den Leiterbahnen) */
+.section__text,
+.hero__title,
+.hero__hint {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 0 36px 28px rgba(255, 255, 255, 0.94);
+  border-radius: 24px;
+}
+
+/* Gelbes Label, z. B. „02 · Die Hauptfigur“ */
+.section__number {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 4px 10px;
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--yellow);
+  border: 2px solid var(--text);
+  border-radius: 4px;
+}
+
+/* Große grüne Überschrift */
+.section__title {
+  margin: 0 0 18px;
+  font-size: clamp(30px, 4.2vw, 48px);
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--green);
+  text-wrap: balance;
+}
+
+/* Fließtext */
+.section__content {
+  max-width: 34em;
+  margin: 0 0 14px;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.section__content:last-child { margin-bottom: 0; }
+
+
+/* ---------- 3. Platzhalter für Grafiken / Animationen ---------- */
+
+.visual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px dashed var(--text);
+  border-radius: 12px;
+}
+
+.visual__tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.visual__desc {
+  max-width: 28em;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+
+/* ---------- 4. Sektion 1: Titel ---------- */
+
+.hero .section__inner {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 32px;
+  text-align: center;
+}
+
+.hero__title {
+  margin: 0;
+  padding: 0.2em 0.3em;
+  font-family: "Press Start 2P", var(--mono);
+  font-size: clamp(22px, 7.5vw, 112px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  text-align: center;
+  color: var(--green);
+  -webkit-text-stroke: 10px var(--text);   /* schwarzer Rand */
+  paint-order: stroke fill;                /* Rand hinter der Füllung */
+}
+
+.hero__hint {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+
+/* ---------- Sektion 3: Nibble fällt aufs Board ---------- */
+
+.board-gif {
+  display: flex;
+  justify-content: center;
+}
+
+.board-gif img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: min(70vh, 560px);
+  height: auto;
+  border: 2px solid var(--text);
+  border-radius: 12px;
+}
+
+
+/* ---------- 5. Sektion 2: Nibble ---------- */
+
+.nibble-gif {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nibble-gif__img {
+  display: block;
+  width: min(100%, 350px);
+  height: auto;
+}
+
+/* Die vier Bits 1 0 1 1 */
+.bits {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.bits span {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--yellow);
+  background: var(--green);
+  border: 2px solid var(--text);
+  border-radius: 8px;
+}
+
+
+/* ---------- 6. Sektion 4: Die Reise ---------- */
+
+/* Die sechs Stationen: zwei Reihen à drei gleich breite Labels */
+.stations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 480px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: station;
+}
+
+.stations li {
+  counter-increment: station;
+  padding: 5px 6px;
+  font-family: var(--mono);
+  font-size: clamp(11px, 1.05vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  border: 2px solid var(--text);
+  border-radius: 4px;
+}
+
+.stations li::before {
+  content: counter(station) " ";
+  font-family: var(--mono);
+}
+
+/* Aktive Station (Kopfhörer) */
+.stations li.is-first {
+  color: var(--green);
+  background: var(--yellow);
+}
+
+/* Noch nicht erreichte Stationen: ausgegraut */
+.stations li:not(.is-first) {
+  color: #a3a9b0;
+  background: #fafafa;
+  border-color: #c3c8ce;
+}
+
+/* Untere Reihe: USB links, RAM 2 Mitte, Grafikkarte rechts */
+.stations li:nth-child(4) { grid-row: 2; grid-column: 3; }
+.stations li:nth-child(5) { grid-row: 2; grid-column: 2; }
+.stations li:nth-child(6) { grid-row: 2; grid-column: 1; }
+
+
+/* ---------- 7. Sektion 5: Minispiel & Frage (Karteikarte) ---------- */
+
+#aufgabe { cursor: pointer; }
+
+.flip {
+  width: 100%;
+  perspective: 1400px;
+}
+
+.flip__inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.flip.is-flipped .flip__inner { transform: rotateY(180deg); }
+
+.flip__face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip__front { aspect-ratio: auto; }       /* Höhe richtet sich nach der Rückseite */
+.flip__back { transform: rotateY(180deg); }
+
+.flip__hint {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+/* Rückseite: die Frage */
+.quiz {
+  width: 100%;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px dashed var(--text);
+  border-radius: 12px;
+}
+
+.quiz .visual__tag { color: var(--green); }
+
+.quiz__q {
+  margin: 8px 0 18px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.quiz__options {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quiz__options li {
+  padding: 12px 16px;
+  font-size: 16px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.quiz__options li.is-right {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--tint-green);
+  border: 2px solid var(--green);
+}
+
+.quiz__options li span {
+  margin-right: 10px;
+  font-family: var(--mono);
+  color: var(--faint);
+}
+
+/* Farbpunkt der Antwort */
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+  vertical-align: -2px;
+  border: 1px solid rgba(17, 17, 17, 0.15);
+  border-radius: 50%;
+}
+
+
+/* ---------- 8. Sektion 6: Die Gefahr (0 gegen 1) ---------- */
+
+.versus {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--text);
+}
+
+.versus b {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  color: var(--text);
+  border: 2px solid var(--text);
+  border-radius: 50%;
+}
+
+/* Nibbles Bit (1. und 3.) gelb hervorgehoben */
+.versus b:nth-of-type(odd) {
+  color: var(--green);
+  background: var(--yellow);
+}
+
+
+/* ---------- 9. Sektion 8: Der Ausdruck ---------- */
+
+.paper {
+  width: 100%;
+  max-width: 380px;
+  justify-self: center;
+  aspect-ratio: 1 / 1.414;     /* A4 */
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 26px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 32px rgba(17, 17, 17, 0.08);
+}
+
+.paper__nibble {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text);
+  border: 2px dashed var(--yellow);
+  border-radius: 50%;
+}
+
+.paper__headline {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--green);
+}
+
+.paper__battery {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.paper__battery i {
+  width: 18px;
+  height: 10px;
+  border: 1.5px solid var(--green);
+  border-radius: 2px;
+}
+
+.paper__battery i.on { background: var(--green); }
+
+.paper__label {
+  margin: 6px 0 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.paper__lines {
+  display: grid;
+  gap: 8px;
+}
+
+.paper__lines div {
+  height: 8px;
+  background: #e6ecf1;
+  border-radius: 4px;
+}
+
+.paper__lines div:nth-child(3n)   { width: 70%; }
+.paper__lines div:nth-child(3n+2) { width: 88%; }
+
+
+/* ---------- 10. Navigation (Punkte rechts) ---------- */
+
+.dots {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  z-index: 10;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dots a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: var(--bg);
+  border: 2px solid var(--green);
+  border-radius: 50%;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.dots a:hover { transform: scale(1.3); }
+.dots a.is-active { background: var(--yellow); }
+.dots a:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+
+/* ---------- 11. Weniger Bewegung (Systemeinstellung) ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .section__inner,
+  .flip__inner { transition: none; }
+}
+
+
+/* ---------- 12. Handy / schmale Bildschirme ---------- */
+
+@media (max-width: 800px) {
+  .section { padding: 56px 40px 56px 20px; }
+  .section__inner { grid-template-columns: 1fr; gap: 28px; }
+  .section:nth-of-type(even) .section__text { order: 0; }
+  .section__content { font-size: 16px; }
+  .dots { right: 12px; }
+  .stations { gap: 6px; }
+  .stations li { font-size: 10px; letter-spacing: 0; padding: 5px 2px; }
+}

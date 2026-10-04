@@ -22,3 +22,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./web/
           server-dir: ./escape/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/_archiv/**

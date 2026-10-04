@@ -1,5 +1,17 @@
+# Startseite und alle Dateien bei jedem Aufruf neu prüfen lassen,
+# damit nach einem Upload sofort die neue Version angezeigt wird.
+DirectoryIndex index.html
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 0 seconds"
+  ExpiresByType image/gif "access plus 0 seconds"
+  ExpiresByType image/png "access plus 0 seconds"
+</IfModule>
+
 <IfModule mod_headers.c>
-  <FilesMatch "\.html$">
+  <FilesMatch "\.(html|css|gif|png)$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
 </IfModule>

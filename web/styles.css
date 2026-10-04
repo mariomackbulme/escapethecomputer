@@ -77,7 +77,9 @@ body {
 .js .section__inner { opacity: 0; transform: translateY(24px); }
 .js .section.is-visible .section__inner { opacity: 1; transform: none; }
 
-/* Jede zweite Sektion: Grafik links, Text rechts */
+/* Jede zweite Sektion: Grafik links, Text rechts.
+   Spalten mittauschen, damit die Grafik immer die breitere Spalte bekommt. */
+.section:nth-of-type(even) .section__inner { grid-template-columns: 1.2fr 1fr; }
 .section:nth-of-type(even) .section__text { order: 2; }
 
 /* Weiße, weich auslaufende Fläche hinter Texten (Lesbarkeit vor den Leiterbahnen) */
@@ -475,6 +477,7 @@ body {
 @media (max-width: 800px) {
   .section { padding: 56px 40px 56px 20px; }
   .section__inner { grid-template-columns: 1fr; gap: 28px; }
+  .section:nth-of-type(even) .section__inner { grid-template-columns: 1fr; }
   .section:nth-of-type(even) .section__text { order: 0; }
   .section__content { font-size: 16px; }
   .dots { right: 12px; }

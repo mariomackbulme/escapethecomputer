@@ -132,8 +132,11 @@ body {
 
 /* ---------- 3. Sektion 1: Titel ---------- */
 
+/* Gleicher Abstand links wie rechts (rechts Platz für die Punkte) -> Titel exakt mittig */
+.section.hero { padding-left: 56px; }
+
 .hero .section__inner {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);   /* Spalte darf nicht breiter als der Bildschirm werden */
   justify-items: center;
   gap: 32px;
   text-align: center;
@@ -160,6 +163,13 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text);
+}
+
+
+/* Kleinere Variante für längere Titel, z. B. „Coming January 2027“ */
+.hero__title--small {
+  font-size: clamp(18px, 5.2vw, 76px);
+  -webkit-text-stroke-width: 7px;
 }
 
 
@@ -555,6 +565,7 @@ html.page-legal { scroll-snap-type: none; }
 
 @media (max-width: 800px) {
   .section { padding: 56px 40px 56px 20px; }
+  .section.hero { padding-left: 40px; }
   .section__inner { grid-template-columns: 1fr; gap: 28px; }
   .section:nth-of-type(even) .section__inner { grid-template-columns: 1fr; }
   .section:nth-of-type(even) .section__text { order: 0; }

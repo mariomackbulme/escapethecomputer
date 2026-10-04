@@ -433,6 +433,83 @@ body {
 .paper__lines div:nth-child(3n+2) { width: 88%; }
 
 
+/* Link zu Impressum & Datenschutz unten in Sektion 8 */
+#ausdruck { position: relative; }
+
+.site-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.site-footer a {
+  color: var(--green);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.site-footer a:hover { text-decoration: underline; }
+
+
+/* ---------- Unterseite: Impressum & Datenschutz ---------- */
+
+html.page-legal { scroll-snap-type: none; }
+
+.legal {
+  max-width: 720px;
+  margin: 48px auto;
+  margin-bottom: 80px;
+  padding: 40px 44px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(17, 17, 17, 0.06);
+}
+
+.legal h2 {
+  margin: 26px 0 6px;
+  font-size: 18px;
+  color: var(--green);
+}
+
+.legal p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.legal a { color: var(--green); }
+
+.legal__back {
+  display: block;
+  width: fit-content;
+  margin-bottom: 28px;
+  font-family: var(--mono);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.legal__note {
+  font-family: var(--mono);
+  font-size: 12px !important;
+  color: #6b7280 !important;
+}
+
+.legal .legal__gap { margin-top: 56px; }
+
+@media (max-width: 800px) {
+  .legal { margin: 20px 16px; padding: 28px 22px; }
+}
+
+
 /* ---------- 10. Navigation (Punkte rechts) ---------- */
 
 .dots {
@@ -451,8 +528,8 @@ body {
 
 .dots a {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   background: var(--bg);
   border: 2px solid var(--green);
   border-radius: 50%;

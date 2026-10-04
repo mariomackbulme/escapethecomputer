@@ -48,6 +48,8 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E %3Cg fill='none' stroke='%23587f53' stroke-opacity='0.2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E %3Cpath d='M0 40H80L110 70H170L200 40H240'/%3E %3Cpath d='M0 170H50L80 200H150L180 170H240'/%3E %3Cpath d='M130 0V36'/%3E%3Cpath d='M130 240V221'/%3E %3Cpath d='M24 100H60L80 120H116'/%3E %3Cpath d='M154 110H200L220 130V146'/%3E %3Crect x='20' y='210' width='40' height='22' rx='2'/%3E %3Cpath d='M28 210v-6M40 210v-6M52 210v-6M28 232v6M40 232v6M52 232v6'/%3E %3C/g%3E %3Cg fill='%23ffffff' stroke='%23587f53' stroke-opacity='0.2' stroke-width='2'%3E %3Ccircle cx='130' cy='40' r='4'/%3E%3Ccircle cx='130' cy='217' r='4'/%3E %3Ccircle cx='20' cy='100' r='4'/%3E%3Ccircle cx='120' cy='120' r='4'/%3E %3Ccircle cx='150' cy='110' r='4'/%3E%3Ccircle cx='220' cy='150' r='4'/%3E %3C/g%3E%3C/svg%3E");
   background-size: 240px 240px;
   background-attachment: fixed;
+  padding-bottom: 20px; 
+
 }
 
 
@@ -358,8 +360,8 @@ body {
 
 /* Nibbles Bit (1. und 3.) gelb hervorgehoben */
 .versus b:nth-of-type(odd) {
-  color: var(--green);
-  background: var(--yellow);
+  color: var(--yellow);
+  background: var(--green);
 }
 
 

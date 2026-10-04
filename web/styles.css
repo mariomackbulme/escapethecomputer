@@ -126,41 +126,7 @@ body {
 .section__content:last-child { margin-bottom: 0; }
 
 
-/* ---------- 3. Platzhalter für Grafiken / Animationen ---------- */
-
-.visual {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 24px;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.96);
-  border: 2px dashed var(--text);
-  border-radius: 12px;
-}
-
-.visual__tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.visual__desc {
-  max-width: 28em;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--text);
-}
-
-
-/* ---------- 4. Sektion 1: Titel ---------- */
+/* ---------- 3. Sektion 1: Titel ---------- */
 
 .hero .section__inner {
   grid-template-columns: 1fr;
@@ -193,7 +159,7 @@ body {
 }
 
 
-/* ---------- Sektion 3: Nibble fällt aufs Board ---------- */
+/* ---------- 4. Board-GIFs (Sektionen 3, 4, 6, 7) ---------- */
 
 .board-gif {
   display: flex;
@@ -204,10 +170,8 @@ body {
   display: block;
   width: auto;
   max-width: 100%;
-  max-height: min(70vh, 560px);
+  max-height: min(70vh, 900px);
   height: auto;
-  border: 2px solid var(--text);
-  border-radius: 12px;
 }
 
 
@@ -299,42 +263,9 @@ body {
 .stations li:nth-child(6) { grid-row: 2; grid-column: 1; }
 
 
-/* ---------- 7. Sektion 5: Minispiel & Frage (Karteikarte) ---------- */
+/* ---------- 7. Sektion 5: Die Aufgabe ---------- */
 
-#aufgabe { cursor: pointer; }
-
-.flip {
-  width: 100%;
-  perspective: 1400px;
-}
-
-.flip__inner {
-  display: grid;
-  transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.flip.is-flipped .flip__inner { transform: rotateY(180deg); }
-
-.flip__face {
-  grid-area: 1 / 1;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.flip__front { aspect-ratio: auto; }       /* Höhe richtet sich nach der Rückseite */
-.flip__back { transform: rotateY(180deg); }
-
-.flip__hint {
-  margin-top: 10px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--green);
-}
-
-/* Rückseite: die Frage */
+/* Die Frage */
 .quiz {
   width: 100%;
   padding: 28px;
@@ -343,7 +274,14 @@ body {
   border-radius: 12px;
 }
 
-.quiz .visual__tag { color: var(--green); }
+.quiz__tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+}
 
 .quiz__q {
   margin: 8px 0 18px;
@@ -423,7 +361,7 @@ body {
 }
 
 
-/* ---------- 9. Sektion 8: Der Ausdruck ---------- */
+/* ---------- 9. Sektion 8: Geschafft (Ausdruck) ---------- */
 
 .paper {
   width: 100%;
@@ -440,16 +378,10 @@ body {
 }
 
 .paper__nibble {
-  width: 64px;
-  height: 64px;
+  display: block;
+  width: auto;
+  height: 96px;
   margin: 0 auto;
-  display: grid;
-  place-items: center;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text);
-  border: 2px dashed var(--yellow);
-  border-radius: 50%;
 }
 
 .paper__headline {
@@ -534,8 +466,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .section__inner,
-  .flip__inner { transition: none; }
+  .section__inner { transition: none; }
 }
 
 

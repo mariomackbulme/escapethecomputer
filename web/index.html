@@ -11,13 +11,13 @@
   <nav aria-label="Sektionen">
     <ul class="dots">
       <li><a href="#titel" aria-label="Titel"></a></li>
-      <li><a href="#nibble" aria-label="Nibble"></a></li>
+      <li><a href="#nibble" aria-label="Die Hauptfigur"></a></li>
       <li><a href="#spielwelt" aria-label="Die Spielwelt"></a></li>
       <li><a href="#reise" aria-label="Die Reise"></a></li>
-      <li><a href="#aufgabe" aria-label="Minispiel und Frage"></a></li>
-      <li><a href="#bits" aria-label="Die Bits"></a></li>
+      <li><a href="#aufgabe" aria-label="Die Aufgabe"></a></li>
+      <li><a href="#bits" aria-label="Die Gefahr"></a></li>
       <li><a href="#flucht" aria-label="Die Flucht"></a></li>
-      <li><a href="#ausdruck" aria-label="Der Ausdruck"></a></li>
+      <li><a href="#ausdruck" aria-label="Geschafft"></a></li>
     </ul>
   </nav>
 
@@ -31,7 +31,7 @@
       </div>
     </section>
 
-    <!-- ========== SEKTION 2: NIBBLE ========== -->
+    <!-- ========== SEKTION 2: DIE HAUPTFIGUR ========== -->
     <section class="section" id="nibble">
       <div class="section__inner">
         <div class="section__text">
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="nibble-gif">
-          <img class="nibble-gif__img" src="img/nibble.gif" alt="Nibble winkt" width="768" height="1056">
+          <img class="nibble-gif__img" src="assets/gif/nibble-greetings.gif" alt="Nibble winkt" width="1000" height="1415">
         </div>
       </div>
     </section>
@@ -59,7 +59,7 @@
           <p class="section__content">Nibble will nur eines: hier raus.</p>
         </div>
         <div class="board-gif">
-          <img src="img/nibble-on-board.gif" alt="Das Motherboard von oben: Nibble fällt auf das Board" width="760" height="917">
+          <img src="assets/gif/nibble-on-board.gif" alt="Das Motherboard von oben: Nibble fällt auf das Board" width="1000" height="1415">
         </div>
       </div>
     </section>
@@ -82,14 +82,13 @@
             <li>USB</li>
           </ol>
         </div>
-        <div class="visual">
-          <span class="visual__tag">Animation · Board</span>
-          <span class="visual__desc">Board mit markierten Stationen. Nibble läuft zum Audiostecker.</span>
+        <div class="board-gif">
+          <img src="assets/gif/nibble-audio.gif" alt="Das Motherboard von oben: Nibble läuft zum blinkenden Kopfhörer-Anschluss" width="1000" height="1415">
         </div>
       </div>
     </section>
 
-    <!-- ========== SEKTION 5: MINISPIEL & FRAGE ========== -->
+    <!-- ========== SEKTION 5: DIE AUFGABE ========== -->
     <section class="section" id="aufgabe">
       <div class="section__inner">
         <div class="section__text">
@@ -98,29 +97,19 @@
           <p class="section__content">An jeder Station muss Nibble ein kleines Minispiel schaffen und eine Frage zur Hardware beantworten. Erst dann erwacht das Bauteil.</p>
           <p class="section__content">Mit jeder gelösten Station wird der Computer lebendiger: Erst kommt der Ton zurück, später leuchten die Farben.</p>
         </div>
-        <!-- Karteikarte: Klick irgendwo in Sektion 5 dreht sie um -->
-        <div class="flip" id="quizFlip">
-          <div class="flip__inner">
-            <div class="flip__face flip__front visual">
-              <span class="visual__tag">Minispiel · Kopfhörer-Anschluss</span>
-              <span class="visual__desc">Platzhalter: Hier läuft das Minispiel (Screenshot oder kurze Animation).</span>
-              <span class="flip__hint">Klicken zum Umdrehen</span>
-            </div>
-            <div class="flip__face flip__back quiz">
-          <span class="visual__tag">Beispiel · Frage am Kopfhörer-Anschluss</span>
+        <div class="quiz">
+          <span class="quiz__tag">Beispiel · Frage am Kopfhörer-Anschluss</span>
           <p class="quiz__q">Welche Farbe hat der Anschluss für Kopfhörer?</p>
           <ol class="quiz__options">
             <li><span>A</span><i class="swatch" style="background:#f4a6c6"></i>Rosa</li>
             <li class="is-right"><span>B</span><i class="swatch" style="background:#8dc63f"></i>Grün</li>
             <li><span>C</span><i class="swatch" style="background:#111111"></i>Schwarz</li>
           </ol>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== SEKTION 6: DIE BITS ========== -->
+    <!-- ========== SEKTION 6: DIE GEFAHR ========== -->
     <section class="section" id="bits">
       <div class="section__inner">
         <div class="section__text">
@@ -132,9 +121,8 @@
             <b>0</b> löscht <b>1</b> <span aria-hidden="true">·</span> <b>1</b> löscht <b>0</b>
           </div>
         </div>
-        <div class="visual">
-          <span class="visual__tag">Animation · Board</span>
-          <span class="visual__desc">Board mit 0en und 1en, die entlang der Leiterbahnen auf Nibble zufliegen</span>
+        <div class="board-gif">
+          <img src="assets/gif/bits-awakening.gif" alt="Das Motherboard von oben: Die CPU glüht und schickt Bits über die Leiterbahnen" width="1000" height="1415">
         </div>
       </div>
     </section>
@@ -148,14 +136,13 @@
           <p class="section__content">Alle Stationen sind wach, der Computer leuchtet und klingt. Jetzt fehlt nur noch der Ausgang.</p>
           <p class="section__content">Ein USB-Kabel wird eingesteckt, und Nibble nutzt seine Chance.</p>
         </div>
-        <div class="visual">
-          <span class="visual__tag">Animation · Board</span>
-          <span class="visual__desc">Voll erleuchtetes Board. Ein USB-Stick fährt von der Seite herein, Nibble springt hinein.</span>
+        <div class="board-gif">
+          <img src="assets/gif/nibble-print.gif" alt="Das Motherboard von oben: Ein USB-Kabel wird eingesteckt, Nibble hüpft hinein" width="1000" height="1415">
         </div>
       </div>
     </section>
 
-    <!-- ========== SEKTION 8: DER AUSDRUCK ========== -->
+    <!-- ========== SEKTION 8: GESCHAFFT ========== -->
     <section class="section" id="ausdruck">
       <div class="section__inner">
         <div class="section__text">
@@ -165,7 +152,7 @@
           <p class="section__content">Ist ein Drucker angeschlossen, kommt das Blatt direkt heraus. Sonst bleibt es als PDF.</p>
         </div>
         <div class="paper" aria-label="Vorschau des Ausdrucks">
-          <div class="paper__nibble">Nibble</div>
+          <img class="paper__nibble" src="assets/img/nibble-front.png" alt="Nibble" width="564" height="874">
           <p class="paper__headline">I escaped the computer! Juhu!</p>
           <div class="paper__battery" aria-label="Verbliebene Batterie: 3 von 4">
             <i class="on"></i><i class="on"></i><i class="on"></i><i></i>
@@ -213,10 +200,6 @@
       const target = list[Math.min(Math.max(current + (next ? 1 : -1), 0), list.length - 1)];
       target.scrollIntoView({ behavior: 'smooth' });
     });
-    // Sektion 5: Klick dreht die Karteikarte um (erneuter Klick dreht zurück)
-    const aufgabe = document.getElementById('aufgabe');
-    const quizFlip = document.getElementById('quizFlip');
-    aufgabe.addEventListener('click', () => quizFlip.classList.toggle('is-flipped'));
 
   </script>
 </body>

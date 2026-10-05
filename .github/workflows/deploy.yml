@@ -1,11 +1,7 @@
 name: Deploy Web zu EasyName
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "web/**"
+  workflow_dispatch:
 
 jobs:
   ftp-deploy:

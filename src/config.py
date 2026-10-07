@@ -22,3 +22,9 @@ NIBBLE_RIGHT_IMG = '../assets/img/nibble-right.png'
 # --- Board images ---
 BOARD_BRIGHT_IMG = '../assets/img/board_bright.png'
 BOARD_LIGHT_IMG = '../assets/img/board_light.png'
+
+# --- Fonts ---
+FONT_TITLE = '../assets/fonts/Fredoka-SemiBold.ttf'
+FONT_TITLE_BOLD = '../assets/fonts/Fredoka-Bold.ttf'
+FONT_TEXT = '../assets/fonts/Nunito-Bold.ttf'
+FONT_TEXT_BOLD = '../assets/fonts/Nunito-ExtraBold.ttf'

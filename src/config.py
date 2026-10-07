@@ -11,7 +11,8 @@ BOARD_SIZE_WIDTH = 700
 BOARD_SIZE_HEIGHT = BOARD_SIZE_WIDTH * 1.415
 
 # --- Object speeds ---
-NIBBLE_SPEED = 100 # Pixels per second
+NIBBLE_SPEED = 50 # Pixels per second
+BITS_NIBBLE_SPEED = 100
 
 # --- IMAGES ---
 # --- Character images ---
@@ -28,3 +29,4 @@ FONT_TITLE = '../assets/fonts/Fredoka-SemiBold.ttf'
 FONT_TITLE_BOLD = '../assets/fonts/Fredoka-Bold.ttf'
 FONT_TEXT = '../assets/fonts/Nunito-Bold.ttf'
 FONT_TEXT_BOLD = '../assets/fonts/Nunito-ExtraBold.ttf'
+FONT_BITS = '../assets/fonts/Menlo-Bold.ttf'

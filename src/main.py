@@ -1,6 +1,6 @@
 import pygame
 import config
-from characters import Nibble
+from characters import Nibble, Bit
 
 # Initialize Pygame
 pygame.init()
@@ -22,20 +22,32 @@ nibble = Nibble(config.WINDOW_WIDTH // 2, config.WINDOW_HEIGHT // 2)
 nibble_group = pygame.sprite.GroupSingle()
 nibble_group.add(nibble)
 
+bits = pygame.sprite.Group()
+
+bitsNibble = pygame.sprite.Group()
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if pygame.key.name(event.key) == 'space':
+                bit = nibble.shoot()
+                bitsNibble.add(bit)
+                print('shoot')
 
     delta_time = clock.tick(config.FPS)
 
     nibble.move(delta_time)
+    bitsNibble.update()
 
     # Render the background and the Nibble character
     screen.fill('white')
     screen.blit(board_image, board_rect)
     
     nibble_group.draw(screen)
+    bits.draw(screen)
+    bitsNibble.draw(screen)
 
     pygame.display.flip()
 

@@ -8,7 +8,7 @@ CAPTION = 'Escape the computer'
 # --- Object sizes ---
 NIBBLE_SIZE = (20, 20)
 BOARD_SIZE_WIDTH = 700
-BOARD_SIZE_HEIGHT = BOARD_SIZE_WIDTH * 1.415
+BOARD_SIZE_HEIGHT = BOARD_SIZE_WIDTH * 1.2122
 
 # --- Object speeds ---
 NIBBLE_SPEED = 50 # Pixels per second

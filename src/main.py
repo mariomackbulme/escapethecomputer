@@ -39,7 +39,7 @@ while running:
     delta_time = clock.tick(config.FPS)
 
     nibble.move(delta_time)
-    bitsNibble.update()
+    bitsNibble.update(board_rect)
 
     # Render the background and the Nibble character
     screen.fill('white')

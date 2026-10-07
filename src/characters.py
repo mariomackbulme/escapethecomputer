@@ -47,7 +47,7 @@ class Nibble(pygame.sprite.Sprite):
         return Bit(self.rect.centerx, self.rect.centery, self.direction)
 
 class Bit(pygame.sprite.Sprite):
-    def __init__(self, x, y, direction, distance=900, speed=2):
+    def __init__(self, x, y, direction, distance=1000, speed=2):
         super().__init__()
         bit_font = pygame.font.Font(config.FONT_BITS, 15)
         self.char = str(random.randint(0,1))
@@ -59,10 +59,13 @@ class Bit(pygame.sprite.Sprite):
         self.endPosition = self.pos + direction.normalize() * distance
         self.index = 0
 
-    def update(self):
+    def update(self, board_rect):
         direction = self.endPosition - self.pos
+        if board_rect.contains(self.rect) == False:
+            self.kill()
         if direction.length() > self.speed:
             self.pos += direction.normalize() * self.speed
         else:
             self.pos = self.endPosition
+            self.kill()
         self.rect.topleft = (self.pos.x, self.pos.y)

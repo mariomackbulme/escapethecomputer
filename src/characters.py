@@ -1,19 +1,16 @@
 import pygame
 import config
+import utils
 import random
 
 class Nibble(pygame.sprite.Sprite):
     def __init__(self, x, y, speed=config.NIBBLE_SPEED, size=config.NIBBLE_SIZE):
         super().__init__()
         self.images = {
-            'front': pygame.transform.smoothscale(
-                pygame.image.load(config.NIBBLE_FRONT_IMG).convert_alpha(), size),
-            'back': pygame.transform.smoothscale(
-                pygame.image.load(config.NIBBLE_BACK_IMG).convert_alpha(), size),
-            'left': pygame.transform.smoothscale(
-                pygame.image.load(config.NIBBLE_LEFT_IMG).convert_alpha(), size),
-            'right': pygame.transform.smoothscale(
-                pygame.image.load(config.NIBBLE_RIGHT_IMG).convert_alpha(), size),
+            'front': utils.load_scaled_image(config.NIBBLE_FRONT_IMG, size),
+            'back': utils.load_scaled_image(config.NIBBLE_BACK_IMG, size),
+            'left': utils.load_scaled_image(config.NIBBLE_LEFT_IMG, size),
+            'right': utils.load_scaled_image(config.NIBBLE_RIGHT_IMG, size),
         }
         self.image = self.images['front']
         self.rect = self.image.get_rect()

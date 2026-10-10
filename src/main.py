@@ -1,6 +1,7 @@
 import pygame
 import config
-from characters import Nibble, Bit
+import utils
+from characters import Nibble
 
 # Initialize Pygame
 pygame.init()
@@ -10,10 +11,7 @@ clock = pygame.time.Clock()
 running = True
 
 # Load and scale the background image
-board_image = pygame.image.load(config.BOARD_BRIGHT_IMG).convert_alpha()
-board_image = pygame.transform.smoothscale(board_image, (config.BOARD_SIZE_WIDTH, config.BOARD_SIZE_HEIGHT))
-
-board_image = pygame.transform.smoothscale(board_image, (config.BOARD_SIZE_WIDTH, config.BOARD_SIZE_HEIGHT))
+board_image = utils.load_scaled_image(config.BOARD_BRIGHT_IMG, (config.BOARD_SIZE_WIDTH, config.BOARD_SIZE_HEIGHT))
 board_rect = board_image.get_rect(center=(config.WINDOW_WIDTH // 2, config.WINDOW_HEIGHT // 2))
 
 # Create a Nibble instance
